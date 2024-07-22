@@ -43,8 +43,8 @@ Loading Summary:<br>
 Start Loading > Execute from `wuwa_exec.txt` > Execute from `wuwa_exec_loading.txt` > Loading... > Execute from `wuwa_exec.txt` > Execute from `wuwa_exec_ingame.txt` > End loading.
 
 # TXT Files Format
-Put one CVar per line.
-Sections like `Engine.ini` e.g. `[SystemSettings]`, `[Core.Log]` etc. are not needed.
+Put one CVar per line.<br>
+Sections like `Engine.ini` e.g. `[SystemSettings]`, `[Core.Log]` etc. are not needed.<br>
 
 Example of txt file's content:
 ```
