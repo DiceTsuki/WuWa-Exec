@@ -52,3 +52,7 @@ t.MaxFPS 0
 r.SetRes 1920x1080f
 r.ScreenPercentage 90
 ```
+
+
+# Issues
+1. The game won't execute `wuwa_exec_loading.txt` during intial loading before entering lobby.
