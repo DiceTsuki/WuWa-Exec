@@ -55,4 +55,4 @@ r.ScreenPercentage 90
 
 
 # Issues
-1. The game won't execute `wuwa_exec_loading.txt` during intial loading before entering lobby.
+1. The game won't execute `wuwa_exec_loading.txt` (and `wuwa_exec.txt` before it) during intial loading before entering lobby.
