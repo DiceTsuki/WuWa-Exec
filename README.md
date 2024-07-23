@@ -7,9 +7,10 @@ A Wuthering Waves' mod for executing Unreal Engine 4 Console Variables (CVars) f
 
 # Compatibility
 1. Compatible with `Wuthering Waves 1.1.x`.
-2. Compatible with mods that don't modify `Client\Content\Aki\JavaScript\Core\Resource\ResourceSystem.js`.
-3. Only CVars that can be executed from Unreal Engine 4's Developer Console can be used with this mod.
-   <br>Take note that even some of them are disabled/removed from the game. 
+2. Compatible with mods that don't modify `Client\Content\Aki\JavaScript\Core\GameBudgetAllocator\GameBudgetInterfaceController.js`.
+3. Compatible with mods that modify `Client\Content\Aki\JavaScript\Core\Resource\ResourceSystem.js`, as long as `GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateMinUpdateFifoBudgetTime()` is not changed.
+4. Only CVars that can be executed from Unreal Engine 4's Developer Console can be used with this mod.
+   <br>Take note that some of them are disabled/removed from the game. 
 
 
 # Installation
@@ -33,16 +34,17 @@ e.g.<br>
 # CVar Location
 Go to `Wuthering Waves Game\Client\Binaries\` and put your CVars inside one of these files:
 
-| File                    | CVars Execution                                                                                                                                                                 |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `wuwa_exec_loading.txt` | At the start of loading e.g.<br>1. Loading with background image.<br>2. Loading before entering/exiting Resonators menu.<br>3. Loading before entering/exiting gacha animation. |
-| `wuwa_exec_ingame.txt`  | At the end of loading.<br>Usually when you can take control of the game.                                                                                                        |
-| `wuwa_exec.txt`         | Before executing CVars from other files.                                                                            |
+| File                    | CVars Execution                                                                                                                                                 |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `wuwa_exec_loading.txt` | At the start of loading e.g.<br>1. Loading with background image.<br>2. Loading before entering Resonators menu.<br>3. Loading before entering gacha animation. |
+| `wuwa_exec_ingame.txt`  | At the end of loading.<br>Usually when you can take control of the game.                                                                                        |
+| `wuwa_exec.txt`         | Before executing CVars from other files.<br>Other files will overwrite similar CVars from this file.                                                            |
 
 Loading Summary:<br>
 Start Loading > Execute from `wuwa_exec.txt` > Execute from `wuwa_exec_loading.txt` > Loading... > Execute from `wuwa_exec.txt` > Execute from `wuwa_exec_ingame.txt` > End loading.
 
-# TXT Files Format
+
+# TXT File's Content
 Put one CVar per line.<br>
 Sections like `Engine.ini` e.g. `[SystemSettings]`, `[Core.Log]` etc. are not needed.<br>
 
@@ -55,4 +57,4 @@ r.ScreenPercentage 90
 
 
 # Issues
-1. The game won't execute `wuwa_exec_loading.txt` (and `wuwa_exec.txt` before it) during intial loading before entering lobby.
+1. The game won't execute `wuwa_exec_loading.txt` (and `wuwa_exec.txt` before it) during intial loading before entering login menu.
