@@ -39,7 +39,7 @@ CVars will be read from files below:
 | `wuwa_exec_ingame.txt`  | At loading's end, after `Engine.ini`.                                                                                                                                                                                                           |
 
 Loading Summary:<br>
-Start Loading > Execute `wuwa_exec.txt` > Loading... > Execute `Engine.ini` > Execute `wuwa_exec_ingame.txt` > End loading.
+Start Loading > Execute `wuwa_exec_loading.txt` > Loading... > Execute `Engine.ini` > Execute `wuwa_exec_ingame.txt` > End loading.
 
 
 # Configuration
