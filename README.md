@@ -1,4 +1,4 @@
-# This mod modifies the game files. Use it at yout own risk!
+# This mod modifies the game files. Use it at your own risk!
 
 
 # WuWa Exec
