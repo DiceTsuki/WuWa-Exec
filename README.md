@@ -2,17 +2,16 @@
 
 
 # WuWa Exec
-A Wuthering Waves' mod for executing Unreal Engine 4 Console Variables (CVars) from external files (including `Engine.ini`) during gameplay.
+A Wuthering Waves' mod for executing Unreal Engine 4 (UE4) Console Variables (CVars) from external files (including `Engine.ini`) during gameplay.
 
-This Readme is for `v1.1.20240725`.
+This Readme is for `v1.1.20240731`.
 
 # Compatibility
 1. Compatible with `Wuthering Waves 1.1.x`.
-2. Compatible with mods that don't modify `Client\Content\Aki\JavaScript\Core\GameBudgetAllocator\GameBudgetInterfaceController.js`.
-3. Compatible with mods that modify `Client\Content\Aki\JavaScript\Core\Resource\ResourceSystem.js`,<br>as long as `GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateMinUpdateFifoBudgetTime()` remains unchanged.
-4. Only CVars that can be executed from Unreal Engine 4's Developer Console can be used with this mod.
+2. Compatible with mods that don't override the same [files](#mod-paks).
+3. CVars must be executable from UE4 Developer's Console.
    <br>Take note that some of them are set to read-only*, disabled or removed from the game.<br>
-\* Will be read (from `Engine.ini` or other sources) and executed once during launch and can't be changed during runtime.
+\* Executed once during launch and can't be changed during runtime.
 
 # Installation
 1. Extract `Wuthering Waves Game` folder from the archive into `Wuthering Waves` folder (contains `launcher.exe`).
@@ -20,7 +19,12 @@ This Readme is for `v1.1.20240725`.
 
 
 # Uninstallation
-1. Go to `Wuthering Waves Game\Client\Content\Paks\~mods\` and delete `ZZZ_WuWa_Exec_99_P.pak`.
+1. Go to `Wuthering Waves Game\Client\Content\Paks\~mods\` and delete:
+   ```
+   ZZZ_WuWa_Exec_Core_99_P.pak
+   ZZZ_WuWa_Exec_Mod_Loading10Pc_99_P.pak
+   ZZZ_WuWa_Exec_Mod_LoadingSnE_99_P.pak
+   ```
 2. Go to `Wuthering Waves Game\Client\Binaries\` and delete:
    ```
    wuwa_exec_engineini_blacklist.txt
@@ -30,38 +34,44 @@ This Readme is for `v1.1.20240725`.
    ```
 
 
-# CVars Execution
-CVars will be read from files below:
-| File                    | Execution                                                                                                                                                                                                                                       |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `wuwa_exec_loading.txt` | At loading's start.<br>Known loadings which will trigger the mod:<br>1. Loading with background image.<br>2. Loading before entering Login menu.<br>3. Loading before entering Resonators menu. <br>4. Loading before entering Gacha animation. |
-| `Engine.ini`            | At loading's end.                                                                                                                                                                                                                               |
-| `wuwa_exec_ingame.txt`  | At loading's end, after `Engine.ini`.                                                                                                                                                                                                           |
+# Mod Paks
+## ZZZ_WuWa_Exec_Core_99_P.pak (Required)
+| About    | Detail                                                                                                                          |
+|----------|---------------------------------------------------------------------------------------------------------------------------------|
+| Function | Store core module required by other WuWa Exec mod paks.                                                                         |
+| Config.  | `wuwa_exec_engineini_blacklist.txt`<br>`wuwa_exec_engineini_whitelist.txt`<br>`wuwa_exec_ingame.txt`<br>`wuwa_exec_loading.txt` |
+| Warning  | 1. Will do nothing on its own.<br>2. Only delete on uninstall!                                                                  |
 
-Loading Summary:<br>
-Start Loading > Execute `wuwa_exec_loading.txt` > Loading... > Execute `Engine.ini` > Execute `wuwa_exec_ingame.txt` > End loading.
+## ZZZ_WuWa_Exec_Mod_Loading10Pc_99_P.pak (Optional)
+| About    | Detail                                                                                                                                                                                            |
+|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Override | `Client\Content\Aki\JavaScript\Game\Module\Loading\LoadingController.js`                                                                                                                          |
+| Function | Execute CVars from `Engine.ini` at 10% loading (only for loading with background image).                                                                                                          |
+| Purpose  | Override forced CVars during loading (occur before 10%) after login menu.<br>Thus forcing the game to follow `Engine.ini` throughout the loading.<br>This is useful for CVars such as `r.SetRes`. |
+| Config.  | `wuwa_exec_engineini_blacklist.txt`<br>`wuwa_exec_engineini_whitelist.txt`                                                                                                                        |
+| Trigger  | Loading with background image (at 10%).                                                                                                                                                           |
+| Optional | Delete if not needed.                                                                                                                                                                             |
+
+## ZZZ_WuWa_Exec_Mod_LoadingSnE_99_P.pak (Optional)
+| About      | Detail                                                                                                                                                                 |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Override   | `Client\Content\Aki\JavaScript\Core\GameBudgetAllocator\GameBudgetInterfaceController.js`                                                                              |
+| Depends On | `GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateMinUpdateFifoBudgetTime()` in <br>`Client\Content\Aki\JavaScript\Core\Resource\ResourceSystem.js` |
+| Function   | Execute CVars at (from):<br>1. Loading's start (`wuwa_exec_loading.txt`).<br>2. Loading's end (`Engine.ini`, then `wuwa_exec_ingame.txt`).                             |
+| Purpose    | 1. Execute just after `wp.Runtime.MaxLoadingLevelStreamingCells`. You can override it if needed.<br>2. Testing CVars live ingame (see `Trigger`).                      |
+| Config.    | `wuwa_exec_engineini_blacklist.txt`<br>`wuwa_exec_engineini_whitelist.txt`<br>`wuwa_exec_ingame.txt`<br>`wuwa_exec_loading.txt`                                        |
+| Trigger    | 1. Loading with background image.<br>2. Loading before Login menu.<br>3. Loading before Resonators menu.<br>4. Loading before Gacha animation.                         |
+| Optional   | Delete if not needed.                                                                                                                                                  |
 
 
 # Configuration
-## Mode: Loading's Start and End
-Both preloaded config. files are empty.
-### Loading's Start
-| About        | Detail                             |
-|--------------|------------------------------------|
-| Config. File | `wuwa_exec_loading.txt`            |
-| Content      | CVars.                             |
-| Function     | Execute CVars listed.              |
-| Activation   | Add at least 1 CVar.               |
-| Deactivation | Leave the file empty or delete it. |
-
-### Loading's End
-| About        | Detail                             |
-|--------------|------------------------------------|
-| Config. File | `wuwa_exec_ingame.txt`             |
-| Content      | CVars.                             |
-| Function     | Execute CVars listed.              |
-| Activation   | Add at least 1 CVar.               |
-| Deactivation | Leave the file empty or delete it. |
+## wuwa_exec_ingame.txt<br>wuwa_exec_loading.txt
+| About    | Detail                      |
+|----------|-----------------------------|
+| Function | Store CVars for execution.  |
+| Content  | CVars.                      |
+| Enable   | Add at least 1 CVar.        |
+| Disable  | Leave it empty / delete it. |
 
 ### CVar Formatting
 Separate CVar and it's value by `space` e.g. `r.ScreenPercentage 90`.
@@ -77,30 +87,27 @@ t.MaxFPS 0
 r.SetRes 1920x1080f
 r.ScreenPercentage 90
 ```
+Note: By default, the txt files are empty.
 
-## Mode: Engine.ini
-Both preloaded config. files are already filled with necessary data.
-### Blacklist (Default)
-| About        | Detail                                                                  |
-|--------------|-------------------------------------------------------------------------|
-| Config. File | `wuwa_exec_engineini_blacklist.txt`                                     |
-| Content      | `[Sections]` (as in `Engine.ini`).                                      |
-| Function     | Execute CVars in `Engine.ini` that are `not` under `[Sections]` listed. |
-| Activation   | The file exists.                                                        |
-| Deactivation | Delete the file.                                                        |
+## wuwa_exec_engineini_blacklist.txt (Default)
+| About    | Detail                                                                                                           |
+|----------|------------------------------------------------------------------------------------------------------------------|
+| Function | Store `[Sections]`.<br>CVars under them, inside `Engine.ini` will `not` be executed.<br>Others will be executed. |
+| Content  | `[Sections]` (as in `Engine.ini`).                                                                               |
+| Enable   | It exists.                                                                                                       |
+| Disable  | Delete it.                                                                                                       |
 
-### Whitelist (After Blacklist was Deactivated)
-| About        | Detail                                                            |
-|--------------|-------------------------------------------------------------------|
-| Config. File | `wuwa_exec_engineini_whitelist.txt`                               |
-| Content      | `[Sections]` (as in `Engine.ini`).                                |
-| Function     | Execute CVars in `Engine.ini` that are under `[Sections]` listed. |
-| Activation   | Blacklist is deactivated and the file exists.                     |
-| Deactivation | Leave the file empty or delete it.                                |
+## wuwa_exec_engineini_whitelist.txt (Used After Blacklist was Disabled)
+| About    | Detail                                                                                                           |
+|----------|------------------------------------------------------------------------------------------------------------------|
+| Function | Store `[Sections]`.<br>CVars under them, inside `Engine.ini` will be executed.<br>Others will `not` be executed. |
+| Content  | `[Sections]` (as in `Engine.ini`).                                                                               |
+| Enable   | Blacklist was disabled, and the file exists.                                                                     |
+| Disable  | Leave it empty / delete it.                                                                                      |
 
 ### [Section] Formatting
 `[Section]` is case-sensitive.<br>
-Make sure that the case is similar to the target `[Section]`.
+Make sure that the case is similar to the target `[Section]` inside `Engine.ini`.
 
 ### TXT Files' Content
 Add 1 `[Section]` per line.
@@ -113,6 +120,7 @@ e.g.
 [Core.Log]
 [WindowsApplication.Accessibility]
 ```
+Note: By default, the txt files are preloaded with necessary `[Sections]`.
 
 # Issues
-1. The game won't execute `wuwa_exec_loading.txt` during intial loading before entering login menu.
+1. The mod will not take effect during intial loading (when integrity check occurs).
