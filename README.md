@@ -4,10 +4,10 @@
 # WuWa Exec
 A Wuthering Waves' mod for executing Unreal Engine 4 (UE4) Console Variables (CVars) from external files (including `Engine.ini`) during gameplay.
 
-This Readme is for `v1.1.20240731`.
+This Readme is for `v1.2.20240813`.
 
 # Compatibility
-1. Compatible with `Wuthering Waves 1.1.x`.
+1. Compatible with `Wuthering Waves 1.2.x`.
 2. Compatible with mods that don't override the same [files](#mod-paks).
 3. CVars must be executable from UE4 Developer's Console.
    <br>Take note that some of them are set to read-only*, disabled or removed from the game.<br>
