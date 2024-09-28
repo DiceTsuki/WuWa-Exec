@@ -1,0 +1,7 @@
+[SystemSettings]
+[/Script/Engine.RendererSettings]
+[/Script/Engine.RendererOverrideSettings]
+[/Script/Engine.StreamingSettings]
+[/Script/Engine.GarbageCollectionSettings]
+[/Script/Engine.NetworkSettings]
+[ConsoleVariables]

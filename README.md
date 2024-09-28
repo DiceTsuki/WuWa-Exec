@@ -4,18 +4,22 @@
 # WuWa Exec
 A Wuthering Waves' mod for executing Unreal Engine 4 (UE4) Console Variables (CVars) from external files (including `Engine.ini`) during gameplay.
 
-This Readme is for `v1.2.20240813`.
+This Readme is for `v1.3.20240928`.
 
 # Compatibility
-1. Compatible with `Wuthering Waves 1.2.x`.
+1. Compatible with `Wuthering Waves 1.3.x`.
 2. Compatible with mods that don't override the same [files](#mod-paks).
 3. CVars must be executable from UE4 Developer's Console.
    <br>Take note that some of them are set to read-only*, disabled or removed from the game.<br>
 \* Executed once during launch and can't be changed during runtime.
 
+# Download
+Get it from [Releases](https://github.com/DiceTsuki/WuWa-Exec/releases).
+
 # Installation
-1. Extract `Wuthering Waves Game` folder from the archive into `Wuthering Waves` folder (contains `launcher.exe`).
-2. Follow [this guide](https://github.com/aarlin/wuthering-waves-mod-starter/?tab=readme-ov-file#how-to-install-mods) (skip the copying `~mods` folder part) on how to activate mods.
+1. Extract `Wuthering Waves Game` folder from `WuWa_Exec_[version].zip` into `Wuthering Waves` folder (contains `launcher.exe`).
+2. For new installation, also extract `Wuthering Waves Game` folder from `WuWa_Exec_[version]_Configs.zip` into the same folder as (1).
+3. Follow [this guide](https://github.com/aarlin/wuthering-waves-mod-starter/?tab=readme-ov-file#how-to-install-mods) (skip the copying `~mods` folder part) on how to activate mods.
 
 
 # Uninstallation
@@ -30,7 +34,7 @@ This Readme is for `v1.2.20240813`.
    wuwa_exec_engineini_blacklist.txt
    wuwa_exec_engineini_whitelist.txt
    wuwa_exec_ingame.txt
-   wuwa_exec_loading.txt.
+   wuwa_exec_loading.txt
    ```
 
 

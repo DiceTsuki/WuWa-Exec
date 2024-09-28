@@ -1,0 +1,4 @@
+[/Script/WindowsTargetPlatform.WindowsTargetSettings]
+[Core.System]
+[Core.Log]
+[WindowsApplication.Accessibility]
