@@ -1,3 +1,5 @@
+# Note: As of Wuthering Waves 1.3.0, pak mods are no longer working.
+
 # This mod modifies the game files. Use it at your own risk!
 
 
